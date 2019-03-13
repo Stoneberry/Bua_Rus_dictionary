@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+ <head>
+  <meta charset="utf-8">
+  <title>Bua-Rus</title>
+  <style>
+  
+.block{
+	background: #ffffff;
+  	width: 100%;
+    height: 100%;
+    position: fixed;
+    top:0%;
+    left:0%;
+}  
+  
+.part{
+	background: #ffffff;
+  	width: 50%;
+    height: 100%;
+    position: fixed;
+    left: 0%;
+    top: 0%;
+    overflow: auto;
+    
+}
+
+.header{
+	background: #feca30;
+  	width: 100%;
+    height: 8%;
+    overflow: auto;
+    background-image: url(static/flag.png);
+	background-repeat: no-repeat;
+	background-size:  auto 100%;
+	position: relative;
+}   
+
+.head_text{
+	color: white;
+	font-size: 250%;
+	position: absolute;
+} 
+
+.bua{
+	background: #ffffff;
+  	width: 80%;
+    height: 80%;
+    top: 8%;
+    left: 10%;
+    overflow: auto;
+    position: relative;
+   } 
+
+
+.search{
+	background: #ffffff;
+  	width: 90%;
+    height: 10%;
+    overflow: auto;
+    position: relative;
+}
+
+
+ input {
+ 	 height: 28px;
+ 	 width: 80%;
+ 	 padding-left: 10px;
+ 	 border: 2px solid #feca30;
+ 	 border-radius: 5px;
+ 	 outline: none;
+	 background: #Ffffff;
+ 	 color: #000000;
+ 	 margin-left: 0;
+	}
+	button {
+	  position:  relative;
+	  top: 0;
+ 	 right: 8px;
+  	width: 34px;
+  	height: 34px;
+  	border: none;
+  	background: #feca30;
+  	border-radius: 0 5px 5px 0;
+  	cursor: pointer;
+	}
+	button:before {
+	  content: "\f002";
+	  font-family: FontAwesome;
+	  font-size: 16px;
+ 	 color: #F9F0DA;
+	}
+
+
+
+</style>
+ </head>
+ <body>
+	
+	<div class="block">
+	
+		<div class="part">
+			<div class="header">
+				<span class="head_text" style="left:110px;">Bua-Rus</span>
+			</div>
+			
+			<div class="bua">
+				<h3>Бурятский язык</h3>
+			
+					<form method="GET" action='/'>
+ 						<div class="search"><input type="text" name="query1" placeholder="Введите слово..." size=80  required>
+ 						<button type="submit"></button></div>
+ 					</form>
+ 			<br><br>
+			{% for POS in res%}
+			
+				<nobr style="font-size: 16pt;">{{ word }}</nobr>, <nobr style="color:red">{{ POS }}</nobr><br><br>
+				
+				{% for sense in res[POS]%}
+					<li><nobr style="text-indent: 1.5em;font-size: 16pt;"><b>{{ sense }}</b></nobr></li>
+					
+					<br>
+					<table border="1" bordercolor="#d33131" align="center"> 
+					{% for form in res[POS][sense]%}
+ 					 	<tr><td>{{ form }}</td><td>{{ res[POS][sense][form] }}</td></tr>
+					{% endfor %}
+					</table>
+					
+					{% for ex in sns[sense]%}
+					<p style="text-indent: 1.5em;"><i>{{ ex[1].text_bua }}</i></p>
+					<p style="text-indent: 1.5em;"><i>{{ ex[1].text_rus }}</i></p>
+					
+					<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
+				
+					<hr style="background-color: #d33131;height: 1px;">
+					{% endfor %}
+					
+				{% endfor %}
+				
+	
+			{% endfor %}
+		
+			</div>
+			
+		</div>
+		
+		
+		<div class="part" style="background:#ffffff;left:50%;">
+			<div class="header" style="background:#d33131;background-image: url(static/Flag_of_Russia.svg);background-repeat: no-repeat;background-size:94px;background-position: right;">
+				<span class="head_text" style="left:337px;">Rus-Bua</span>
+			</div>
+			
+			<div class="bua">
+				<h3>Русский язык</h3>
+				
+					<form method="GET" action='/rus'>
+ 						<div class="search"><input type="text"  style="border: 2px solid #d33131;" name="query1" placeholder="Введите слово..." size=80  required>
+ 						<button type="submit" style="background:#d33131;"></button></div>
+ 					</form>
+		
+			</div>
+			
+		</div>
+		
+		
+	</div>
+	
+ 
+ </body>
+ </html>
