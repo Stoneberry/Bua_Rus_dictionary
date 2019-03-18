@@ -90,7 +90,30 @@
  	 color: #F9F0DA;
 	}
 
-
+.hide {
+    display: none; 
+}
+.hide + label ~ div{
+    display: none;
+}
+/* оформляем текст label */
+.hide + label {
+    border-bottom: 1px dotted #feca30;
+    padding: 0;
+    color: #feca30;
+    cursor: pointer;
+    display: inline-block; 
+}
+/* вид текста label при активном переключателе */
+.hide:checked + label {
+    color: #d33131;
+    border-bottom: 0;
+}
+/* когда чекбокс активен показываем блоки с содержанием  */
+.hide:checked + label + div {
+    display: block; 
+    background: #ffffff;
+}
 
 </style>
  </head>
@@ -132,38 +155,43 @@
 			
 			<p style="font-size: 16pt;">{{ word }}</p>
 			
-			{% for bu_word in res%}
-				
-					{% for POS in res[bu_word].get_tree() %}
+			{% for query in res %}
 			
-						{% for sense in res[bu_word].get_tree()[POS] %}
+				{% for bu_word in query%}
+				
+					{% for POS in query[bu_word].get_tree() %}
+			
+						{% for sense in query[bu_word].get_tree()[POS] %}
 						
-							<li><nobr style="font-size: 16pt;text-indent: 1.5em"><b>{{ bu_word }}</b></nobr>,  <nobr style="color:red; font-size: 16pt;">{{ POS }}</nobr> - <nobr style="text-indent: 2.5em;font-size: 16pt;">{{ sense }}</nobr></li>
+							<li><nobr style="font-size: 16pt;text-indent: 1.5em"><b>{{ bu_word }}</b></nobr>,  <nobr style="color:red; font-size: 16pt;">{{ POS }}</nobr> - <nobr style="text-indent: 2.5em;font-size: 16pt;">{{ sense.lower() }}</nobr></li>
 					
 							<br>
 							<table border="1" bordercolor="#feca30" align="center"> 
-								{% for form in res[bu_word].get_tree()[POS][sense]%}
- 					 				<tr><td>{{ form }}</td><td>{{ res[bu_word].get_tree()[POS][sense][form] }}</td></tr>
+								{% for form in query[bu_word].get_tree()[POS][sense]%}
+ 					 				<tr><td>{{ form }}</td><td>{{ query[bu_word].get_tree()[POS][sense][form] }}</td></tr>
 								{% endfor %}
 							</table>
+						
+							{% for ex in query[bu_word].examples[sense]%}
+								<p style="text-indent: 1.5em;"><i>{{ ex[1].text_bua }}</i></p>
+								<p style="text-indent: 1.5em;"><i>{{ ex[1].text_rus }}</i></p>
 					
-							{% for ex in res[bu_word].examples[sense]%}
-							<p style="text-indent: 1.5em;"><i>{{ ex[1].text_bua }}</i></p>
-							<p style="text-indent: 1.5em;"><i>{{ ex[1].text_rus }}</i></p>
-					
-							<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
+								<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
 				
-							<hr style="background-color: #feca30;height: 1px;">
+								<hr style="background-color: #feca30;height: 1px;">
 							{% endfor %}
+							
+					
 				
 					
 					{% endfor %}
 						
 				{% endfor %}
+			
 				
 			{% endfor %}
 			
-			
+		{% endfor %}
 			
 			</div>
 			

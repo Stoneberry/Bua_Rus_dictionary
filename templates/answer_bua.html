@@ -90,6 +90,30 @@
  	 color: #F9F0DA;
 	}
 
+.hide {
+    display: none; 
+}
+.hide + label ~ div{
+    display: none;
+}
+/* оформляем текст label */
+.hide + label {
+    border-bottom: 1px dotted #d33131;
+    padding: 0;
+    color: #d33131;
+    cursor: pointer;
+    display: inline-block; 
+}
+/* вид текста label при активном переключателе */
+.hide:checked + label {
+    color: #feca30;
+    border-bottom: 0;
+}
+/* когда чекбокс активен показываем блоки с содержанием  */
+.hide:checked + label + div {
+    display: block; 
+    background: #ffffff;
+}
 
 
 </style>
@@ -116,7 +140,7 @@
 				<nobr style="font-size: 16pt;">{{ word }}</nobr>, <nobr style="color:red">{{ POS }}</nobr><br><br>
 				
 				{% for sense in res[POS]%}
-					<li><nobr style="text-indent: 1.5em;font-size: 16pt;"><b>{{ sense }}</b></nobr></li>
+					<li><nobr style="text-indent: 1.5em;font-size: 16pt;"><b>{{ sense.lower() }}</b></nobr></li>
 					
 					<br>
 					<table border="1" bordercolor="#d33131" align="center"> 
@@ -124,15 +148,16 @@
  					 	<tr><td>{{ form }}</td><td>{{ res[POS][sense][form] }}</td></tr>
 					{% endfor %}
 					</table>
-					
-					{% for ex in sns[sense]%}
-					<p style="text-indent: 1.5em;"><i>{{ ex[1].text_bua }}</i></p>
-					<p style="text-indent: 1.5em;"><i>{{ ex[1].text_rus }}</i></p>
-					
-					<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
 				
-					<hr style="background-color: #d33131;height: 1px;">
-					{% endfor %}
+						{% for ex in sns[sense]%}
+						<p style="text-indent: 1.5em;"><i>{{ ex[1].text_bua }}</i></p>
+						<p style="text-indent: 1.5em;"><i>{{ ex[1].text_rus }}</i></p>
+					
+						<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
+				
+						<hr style="background-color: #d33131;height: 1px;">
+						{% endfor %}
+				
 					
 				{% endfor %}
 				
