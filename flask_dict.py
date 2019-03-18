@@ -61,6 +61,9 @@ with open('bua_data.pickle', 'rb') as f:
 with open('bua_rus_entries.pkl', 'rb') as f:
     rus_data = pickle.load(f)
 
+with open('rus_rus.pkl', 'rb') as f:
+    rus_rus = pickle.load(f)
+
 
 @app.route('/', methods=['GET'])
 def rus():
@@ -87,9 +90,14 @@ def bua():
     if request.args:
         query1 = request.args['query1']
 
-        result = rus_data.get(query1)
+        r_quer = rus_rus.get(query1)
 
-        if result:
+        if r_quer:
+            result = []
+            for q in r_quer:
+                if rus_data.get(q):
+                    result.append(rus_data.get(q))
+
             return render_template('answer_rus.html', res=result, word=query1)
 
     return render_template('bua.html')
