@@ -135,6 +135,8 @@
  						<button type="submit"></button></div>
  					</form>
  			<br><br>
+ 			
+ 			
 			{% for POS in res%}
 			
 				<nobr style="font-size: 16pt;">{{ word }}</nobr>, <nobr style="color:red">{{ POS }}</nobr><br><br>
@@ -150,8 +152,20 @@
 					</table>
 				
 						{% for ex in sns[sense]%}
-						<p style="text-indent: 1.5em;"><i>{{ ex[1].text_bua }}</i></p>
-						<p style="text-indent: 1.5em;"><i>{{ ex[1].text_rus }}</i></p>
+						<p style="text-indent: 1.5em;"><i>{{ ex[2] }}</i></p>
+						<p style="text-indent: 1.5em;">
+								
+								{% for part in ex[1] %}
+								
+								{% if part.startswith('!!') %}
+								<i style="color:#d33131">{{ part[2:] }}</i>
+								{% endif %}
+																
+								{% if not part.startswith('!!') %}
+									<i>{{ part }}</i>
+									{% endif %}	
+								
+								{% endfor %}</p>
 					
 						<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
 				

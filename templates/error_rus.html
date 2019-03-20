@@ -98,15 +98,15 @@
 }
 /* оформляем текст label */
 .hide + label {
-    border-bottom: 1px dotted #feca30;
+    border-bottom: 1px dotted #d33131;
     padding: 0;
-    color: #feca30;
+    color: #d33131;
     cursor: pointer;
     display: inline-block; 
 }
 /* вид текста label при активном переключателе */
 .hide:checked + label {
-    color: #d33131;
+    color: #feca30;
     border-bottom: 0;
 }
 /* когда чекбокс активен показываем блоки с содержанием  */
@@ -114,6 +114,7 @@
     display: block; 
     background: #ffffff;
 }
+
 
 </style>
  </head>
@@ -123,17 +124,18 @@
 	
 		<div class="part">
 			<div class="header">
-				<span class="head_text" style="left:100px;">Bua-Rus</span>
+				<span class="head_text" style="left:110px;">Bua-Rus</span>
 			</div>
 			
 			<div class="bua">
-				<h3>Бурятско-Русский словарь</h3>
+				<h3>Бурятский язык</h3>
 			
 					<form method="GET" action='/'>
- 						<div class="search"><input type="text" name="query1" placeholder="Введите слово..." size=80  required>
+ 						<div class="search"><input type="text" name="query1" placeholder="Введите слово..." size=80 >
  						<button type="submit"></button></div>
  					</form>
-			
+ 			<br><br>
+		
 			</div>
 			
 		</div>
@@ -145,66 +147,30 @@
 			</div>
 			
 			<div class="bua">
-				<h3>Русско-Бурятский словарь</h3>
+				<h3>Русский язык</h3>
 				
 					<form method="GET" action='/rus'>
- 						<div class="search"><input type="text"  style="border: 2px solid #d33131;" name="query1" placeholder="Введите слово..." size=80  required>
+ 						<div class="search"><input type="text"  style="border: 2px solid #d33131;" name="query1" placeholder="Введите слово..." size=80 >
  						<button type="submit" style="background:#d33131;"></button></div>
+ 						
+ 						{{ rusw }}
+ 					
+ 					<h5>Такого слова нет в словаре.</h5>
+ 					
+ 					
+ 					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D1%83%D0%B5%D1%85%D0%B0%D1%82%D1%8C" target="_blank">уехать<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D0%BD%D0%B5" target="_blank">не<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D0%BE%D0%B4%D0%B8%D0%BD" target="_blank">один<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B5" target="_blank">вместе<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D1%87%D1%82%D0%BE" target="_blank">что<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D1%8F" target="_blank">я<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D0%BE%D1%87%D0%B5%D0%BD%D1%8C" target="_blank">очень<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D0%B6%D0%B4%D0%B0%D1%82%D1%8C" target="_blank">ждать<a></li>
+					<li><a href="http://stonewebsite.pythonanywhere.com/rus?query1=%D0%BC%D1%8B" target="_blank">ядуун<a></li>
+		
+		
  					</form>
-			
-			
-			<p style="font-size: 16pt;">{{ word }}</p>
-			
-			
-				{% for bu_word in query%}
-				
-					{% for POS in query[bu_word][0] if bu_word != 'link' %}
-			
-						{% for sense in query[bu_word][0][POS] %}
-						
-							<li><nobr style="font-size: 16pt;text-indent: 1.5em"><b><a href="{{ query[bu_word][2] }}" target="_blank">{{ bu_word }}<a></b></nobr>,  <nobr style="color:red; font-size: 16pt;">{{ POS }}</nobr> - <nobr style="text-indent: 2.5em;font-size: 16pt;">{{ sense.lower() }}</nobr></li>
-					
-							<br>
-							<table border="1" bordercolor="#feca30" align="center"> 
-								{% for form in query[bu_word][0][POS][sense]%}
- 					 				<tr><td>{{ form }}</td><td>{{ query[bu_word][0][POS][sense][form] }}</td></tr>
-								{% endfor %}
-							</table>
-						
-							{% for ex in query[bu_word][1][sense]%}
-								<p style="text-indent: 1.5em;"><i>{{ ex[2] }}</i></p>
-								<p style="text-indent: 1.5em;">
-								
-								{% for part in ex[1] %}
-								
-								{% if part.startswith('!!') %}
-								<i style="color:#d33131">{{ part[2:] }}</i>
-								{% endif %}
-																
-								{% if not part.startswith('!!') %}
-									<i>{{ part }}</i>
-									{% endif %}	
-								
-								{% endfor %}</p>
-					
-					
-								<nobr style="color:gray;font-size: 11pt;">[{{ ex[0]['author'] }}, {{ ex[0]['header'] }}, {{ ex[0]['created'] }}]</nobr>
-				
-								<hr style="background-color: #feca30;height: 1px;">
-							{% endfor %}
-							
-					
-				
-					
-					{% endfor %}
-						
-				{% endfor %}
-			
-				
-			{% endfor %}
-			
-
-			
+		
 			</div>
 			
 		</div>
